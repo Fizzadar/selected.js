@@ -13,18 +13,18 @@
             options = select.querySelectorAll('option'),
             multiple = select.multiple || false;
 
+        // Inherit the targets classes
         container.className = select.className;
         container.classList.add('selected');
 
+        // Define the selected-type
         if (multiple)
             container.classList.add('selected-multiple');
         else
             container.classList.add('selected-single');
 
         optionsList.className = 'selected-options';
-
         activeList.className = 'selected-active';
-        activeList.style.overflow = 'auto';
 
         // Hide the select & options list
         select.style.display = 'none';
@@ -33,7 +33,7 @@
         // Moves the option list up/down inline with the active list's height
         var moveOptionList = function() {
             optionsList.style.marginTop = activeList.offsetHeight + 'px';
-            optionsList.style.width = activeList.clientWidth + 'px';
+            optionsList.style.width = activeList.offsetWidth + 'px';
         };
 
         var onFocus = function() {
@@ -42,9 +42,11 @@
         }
 
         container.addEventListener('click', function(ev) {
-            onFocus();
-            moveOptionList();
-            searchBox.focus();
+            if (!activeList.classList.contains('focus')) {
+                onFocus();
+                moveOptionList();
+                searchBox.focus();
+            }
         });
 
         // Bind up the search box
@@ -56,7 +58,10 @@
             activeList.classList.remove('focus');
         });
 
-        // Stops clicks on the option list propagating to blur searchBox
+        // Stops clicks on the option list & container propagating to blur searchBox
+        container.addEventListener('mousedown', function(ev) {
+            ev.preventDefault();
+        });
         optionsList.addEventListener('mousedown', function(ev) {
             ev.preventDefault();
         });
@@ -66,13 +71,17 @@
             var regex = new RegExp(searchBox.value, 'i'),
                 targets = optionsList.querySelectorAll('li');
 
-            for(var i=0; i<targets.length; i++) {
+            for (var i=0; i<targets.length; i++) {
                 var target = targets[i];
-                if(target.classList.contains('selected')) continue;
+
+                // With multiple active options are never shown in the options list, with single
+                // we show both the active/inactive options with the active highlighted
+                if(multiple && target.classList.contains('active'))
+                    continue;
 
                 if(!target.textContent.match(regex)) {
                     target.style.display = 'none';
-                } else if (!target.classList.contains('active')) {
+                } else {
                     target.style.display = 'block';
                 }
             };
@@ -95,7 +104,7 @@
                 if (multiple) {
                     item.style.display = 'none';
 
-                // If single ensure no other options are active, but keep in the list
+                // If single ensure no other options are selected, but keep in the list
                 } else {
                     for (var i=0; i<options.length; i++) {
                         if (options[i]._deselected)
@@ -124,8 +133,10 @@
             option.selected = true;
 
             // Clear & reload dropdown filter
-            searchBox.value = '';
-            filterSearch();
+            if (searchBox.value && searchBox.value !== '') {
+                searchBox.value = '';
+                filterSearch();
+            }
 
             // Create "selected" option
             var item = document.createElement('li');
@@ -165,9 +176,14 @@
 
             if(option._deselected) {
                 option._deselected.style.display = 'block';
-                option._deselected.classList.remove('selected');
+                option._deselected.classList.remove('active');
             } else {
                 createDeselected(option);
+            }
+
+            // Reload dropdown filter
+            if (searchBox.value && searchBox.value !== '') {
+                filterSearch();
             }
 
             // Move the optionList accordingly
