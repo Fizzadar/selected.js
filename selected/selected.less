@@ -1,0 +1,60 @@
+.selected {
+    position: relative;
+    width: 100%;
+
+    ul {
+        padding: 0;
+        margin: 0;
+
+        input {
+            border: none;
+            width: 25px;
+            outline: none;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        &.selected-options {
+            position: absolute;
+            z-index: 9999;
+            width: 100%;
+            background: white;
+            max-height: 300px;
+            overflow-y: auto;
+
+            li {
+                cursor: pointer;
+
+                &.active {
+                    display: none;
+                }
+            }
+        }
+
+        &.selected-active {
+            background: white;
+            min-height: 10px;
+
+            li {
+                display: inline-block;
+            }
+        }
+    }
+
+    &.selected-multiple {
+        ul.selected-active {
+            li {
+                margin: 2px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    &.selected-single {
+        ul.selected-options li.active {
+            background: lightgrey;
+        }
+    }
+}
