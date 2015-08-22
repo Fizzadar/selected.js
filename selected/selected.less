@@ -5,6 +5,8 @@
     ul {
         padding: 0;
         margin: 0;
+        /* ensures offsetWidth for dropdown list is same width as the active list */
+        box-sizing: border-box;
 
         input {
             border: none;
@@ -26,16 +28,13 @@
 
             li {
                 cursor: pointer;
-
-                &.active {
-                    display: none;
-                }
             }
         }
 
         &.selected-active {
             background: white;
             min-height: 10px;
+            overflow: auto;
 
             li {
                 display: inline-block;
@@ -48,6 +47,10 @@
             li {
                 margin: 2px;
                 cursor: pointer;
+
+                &.active {
+                    display: none;
+                }
             }
         }
     }
