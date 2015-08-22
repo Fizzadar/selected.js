@@ -1,0 +1,16 @@
+{
+    "name": "selected.js",
+    "version": "1.0.0",
+    "description": "A simple, no-dependency <select> replacement.",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Fizzadar/selected.js.git"
+    },
+    "author": "Nick Barrett",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Fizzadar/selected.js/issues"
+    },
+    "homepage": "https://github.com/Fizzadar/selected.js#readme"
+}
