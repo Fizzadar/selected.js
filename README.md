@@ -1,6 +1,6 @@
 # selected.js
 
-A simple, no-dependency `<select>` replacement.
+A simple, no-dependency `<select>` replacement. Check out [my blog post](http://pointlessramblings.com/posts/selectedjs/) and the [example page](http://fizzadar.com/selected.js/) for more info.
 
 # Synopsis
 
