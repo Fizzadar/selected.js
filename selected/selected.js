@@ -214,7 +214,7 @@
         var textWidthTester = document.createElement('div');
         textWidthTester.style.visibility = 'hidden';
         textWidthTester.style.float = 'left';
-        textWidthTester.textContent = 'a';
+        textWidthTester.textContent = 'm';
         document.body.appendChild(textWidthTester);
         selected.textWidth = textWidthTester.offsetWidth;
         document.body.removeChild(textWidthTester);
