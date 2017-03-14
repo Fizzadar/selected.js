@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 VERSION=`cat package.json | grep -oEi '[0-9]+.[0-9]+.[0-9]+' | head -1`
 
 echo "Releasing selected.js v$VERSION"
